@@ -1,0 +1,27 @@
+﻿<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Unity WebGL Player | %UNITY_WEB_NAME%</title>
+  <link rel="stylesheet" href="TemplateData/style.css">
+  <link rel="shortcut icon" href="TemplateData/favicon.ico" />
+  <script src="TemplateData/UnityProgress.js"></script>
+</head>
+<body class="template">
+  <p class="header"><span>Unity WebGL Player | </span>%UNITY_WEB_NAME%</p>
+  <div class="template-wrap clear">
+    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" height="%UNITY_HEIGHT%" width="%UNITY_WIDTH%"></canvas>
+    <div class="logo"></div>
+    <div class="fullscreen">
+      <img src="TemplateData/fullscreen.png" width="38" height="38" alt="Fullscreen" title="Fullscreen" onclick="vrFullScreen()" />
+      <div style="margin-left:30px;background:rgb(70,147,217);color:white" class="title" onclick="vrSensor && vrSensor.resetSensor()">Reset Sensor</div>
+    </div>
+    <div class="title">%UNITY_WEB_NAME%</div>
+  </div>
+  <p class="footer">&laquo; created with <a href="http://unity3d.com/" title="Go to unity3d.com">Unity</a> &raquo;</p>
+  %UNITY_WEBGL_LOADER_GLUE%
+  <script src="js/three.min.js"></script>
+  <script src="js/UnityWebVRManager.js"></script>
+</body>
+</html>
