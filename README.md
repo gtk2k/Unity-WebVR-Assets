@@ -10,7 +10,7 @@ WebGLTemplatesフォルダーを、
 これで、Build Settings > WebGL > Player Settings > Publishing Settings > WebGL Template にWebVRというテンプレートが追加されます。  
 
 次にWebVR Assetsフォルダー内のPrefabフォルダーとScriptsフォルダーをプロジェクトのAssetsフォルダにコピーします。
-PrefabsフォルダーにはWebVRCameraSetというPrefabがありますので、このカメラを適当に配置します。
+PrefabsフォルダーにはWebVRCameraSetというPrefabがありますので、このカメラを適当に配置し、WebVRCameraSetにScriptsフォルダ内にあるStereoCamera.csをアタッチします。
 
 あとは、WebGLでWebVRテンプレートを使ってビルドを行い、出力されたinde.htmlにアクセスすればできます。
 
