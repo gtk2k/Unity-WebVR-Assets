@@ -2,8 +2,8 @@
 UnityでWebVRに対応したWebGLビルドを行うテンプレートおよびアセット
 
 ##使い方
-WebVR Tenmlateフォルダ内のWebVRフォルダを、
+WebGLTemplatesフォルダを、
 * Windowsの場合  
-  C:\Program Files\Unity\Editor\Data\PlaybackEngines\webglsupport\BuildTools\WebGLTemplatesフォルダにコピーします。
+  C:\Program Files\Unity\Editor\Data\PlaybackEngines\webglsupport\BuildToolsフォルダ内に上書きコピーします。
 * Macの場合
-  プロジェクトのAssetsフォルダに
+  プロジェクト内のAssetsフォルダにコピーします。
