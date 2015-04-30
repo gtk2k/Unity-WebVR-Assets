@@ -2,8 +2,17 @@
 UnityでWebVRに対応したWebGLビルドを行うテンプレートおよびアセット
 
 ##使い方
-WebGLTemplatesフォルダを、
+WebGLTemplatesフォルダーを、
 * Windowsの場合  
-  C:\Program Files\Unity\Editor\Data\PlaybackEngines\webglsupport\BuildToolsフォルダ内に上書きコピーします。
+  C:\Program Files\Unity\Editor\Data\PlaybackEngines\webglsupport\BuildToolsのフォルダーに上書きします。
 * Macの場合  
-  プロジェクト内のAssetsフォルダにコピーします。
+  プロジェクト内のAssetsフォルダーにコピーします。
+これで、Build Settings > WebGL > Player Settings > Publishing Settings > WebGL Template にWebVRというテンプレートが追加されます。  
+
+次にWebVR Assetsフォルダー内のPrefabフォルダーとScriptsフォルダーをプロジェクトのAssetsフォルダにコピーします。
+PrefabsフォルダーにはWebVRCameraSetというPrefabがありますので、このカメラを適当に配置します。
+
+あとは、WebGLでWebVRテンプレートを使ってビルドを行い、出力されたinde.htmlにアクセスすればできます。
+
+
+
