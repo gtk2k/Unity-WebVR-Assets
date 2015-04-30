@@ -16,4 +16,4 @@ PrefabsフォルダーにはWebVRCameraSetというPrefabがありますので�
 あとは、WebGLでWebVRテンプレートを使ってビルドを行い、出力されたindex.htmlにアクセスすればできます。
 
 
-
+ライセンスはフリーです。自由に改変したりしてもかまいません。
