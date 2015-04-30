@@ -1,5 +1,5 @@
 # Unity-WebVR-Test-Assets
-UnityでWebVRに対応したWebGLビルドを行うテンプレートおよびアセット
+UnityでWebVRに対応したWebGLビルドを行うテスト用のテンプレートおよびアセット
 
 ##使い方
 WebGLTemplatesフォルダーを、
@@ -16,4 +16,4 @@ PrefabsフォルダーにはWebVRCameraSetというPrefabがありますので�
 あとは、WebGLでWebVRテンプレートを使ってビルドを行い、出力されたindex.htmlにアクセスすればできます。
 
 
-ライセンスはフリーです。自由に改変したりしてもかまいません。
+ライセンスはフリーです。自由に使ってください。
