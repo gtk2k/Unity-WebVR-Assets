@@ -5,5 +5,5 @@ UnityでWebVRに対応したWebGLビルドを行うテンプレートおよび�
 WebGLTemplatesフォルダを、
 * Windowsの場合  
   C:\Program Files\Unity\Editor\Data\PlaybackEngines\webglsupport\BuildToolsフォルダ内に上書きコピーします。
-* Macの場合
+* Macの場合  
   プロジェクト内のAssetsフォルダにコピーします。
