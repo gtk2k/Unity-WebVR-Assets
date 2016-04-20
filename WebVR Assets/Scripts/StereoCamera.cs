@@ -45,7 +45,7 @@ public class StereoCamera : MonoBehaviour {
         unityEuler.x = -unityEuler.x;
         unityEuler.z = -unityEuler.z;
         myTransform.rotation = Quaternion.Euler(unityEuler);
-        var pos = webVRPosition * 10;
+        var pos = webVRPosition;
         pos.z *= -1;
         myTransform.position = pos;
     }
