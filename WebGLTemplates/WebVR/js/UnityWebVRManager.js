@@ -1,20 +1,20 @@
 var vrHMD, vrSensor;
-var fullscreenchange = canvas.mozRequestFullScreen ? 'mozfullscreenchange' : 'webkitfullscreenchange';
+var fullscreenchange = canvas.requestFullscreen ? 'fullscreenchange' : 'webkitfullscreenchange';
 
 function vrFullScreen() {
   if (!vrHMD) {
     alert('Not ready VRDevice');
     return;
   }
-  if (canvas.mozRequestFullScreen) {
-    canvas.mozRequestFullScreen({ vrDisplay: vrHMD });
+  if (canvas.requestFullscreen) {
+    canvas.requestFullscreen({ vrDisplay: vrHMD });
   } else if (canvas.webkitRequestFullscreen) {
     canvas.webkitRequestFullscreen({ vrDisplay: vrHMD });
   }
 }
 
 document.addEventListener(fullscreenchange, function (event) {
-  if (document.mozFullScreenElement || document.webkitFullscreenElement) {
+  if (document.fullscreenElement || document.webkitFullscreenElement) {
     SendMessage('WebVRCameraSet', 'changeMode', 'vr');
   } else {
     SendMessage('WebVRCameraSet', 'changeMode', 'normal');
