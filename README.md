@@ -1,46 +1,41 @@
 # Unity-WebVR-Test-Assets
 
-WebVR template and assets for creating WebVR enabled Unity projects.
+WebVR template and assets for creating WebVR-enabled Unity projects.
 
 
 ## How to Use
 
 ### Copy WebGL template
 
-* PC users: Overwrite `C:\Program Files\Unity\Editor\Data\PlaybackEngines\webglsupport\BuildTools` with `WebGLTemplates`.
-
-* Mac users: Copy the `WebGLTemplates` into your _Assets_ folder.
-
+* __Windows__ users: Overwrite `C:\Program Files\Unity\Editor\Data\PlaybackEngines\webglsupport\BuildTools` with [`WebGLTemplates`](WebGLTemplates).
+* __Mac__ users: Copy the [`WebGLTemplates`](WebGLTemplates) into your `Assets` folder.
 
 ### Set build platform to WebGL
 
-* File > Build Settings and set _WebGL_ as your platform.
+From `File > Build Settings`, select `WebGL` as the platform.
 
 ![WebGL!](http://i.imgur.com/91TzPWC.png)
 
 ### Set WebGL template
 
-* Edit > Project Settings > Player
-
-* Under _Resolution and Presentation_, select _WebVR_ as your WebGL template.
+1. Open `Edit > Project Settings > Player` to access the `Player` settings.
+2. Under `Resolution and Presentation`, select `WebVR` as your WebGL template.
 
 ![Template!](http://i.imgur.com/YemCgpB.png)
 
-### Setup WebVR camera
+### Set up WebVR camera
 
-* Copy `WebVRCameraSet.prefab` from the `WebVR Assets/prefabs` folder into your _Assets_.
-
-* Replace your default _Main Camera_ with the _WebVRCameraSet_ prefab.
-
-* Copy `StereoCamera.cs` from the `WebVR Assets/Scripts` folder into your _Assets_, and ensure that it is attatched to the parent node of the prefab.
+1. Copy `WebVRCameraSet.prefab` from the `WebVR Assets/prefabs` folder into your `Assets`.
+2. Replace your default `Main Camera` with the `WebVRCameraSet` prefab.
+3. Copy `WebVR Assets/Scripts/StereoCamera.cs` into your `Assets`, and ensure that it is attached to the parent node of the prefab.
 
 ![Camera!](http://i.imgur.com/hE3wLJV.png)
 
 ### Build and run
 
-Once your project builds, open the `index.html` in a WebVR enabled browser.
+Once your project finishes building, open the generated `index.html` in a [WebVR-enabled browser](https://webvr.info/#how-can-i-try-it).
 
-* [Instructions to setup Firefox Nightly with WebVR](http://mozvr.com/#start)
+* [Instructions to set up Firefox Nightly with WebVR](http://mozvr.com/#start)
 
 
 
