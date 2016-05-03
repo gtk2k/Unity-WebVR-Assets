@@ -25,9 +25,9 @@ From `File > Build Settings`, select `WebGL` as the platform.
 
 ### Set up WebVR camera
 
-1. Copy `WebVRCameraSet.prefab` from the `WebVR Assets/prefabs` folder into your `Assets`.
+1. Copy `WebVRCameraSet.prefab` from the `WebVRAssets/prefabs` folder into your `Assets`.
 2. Replace your default `Main Camera` with the `WebVRCameraSet` prefab.
-3. Copy `WebVR Assets/Scripts/StereoCamera.cs` into your `Assets`, and ensure that it is attached to the parent node of the prefab.
+3. Copy `WebVRAssets/Scripts/StereoCamera.cs` into your `Assets`, and ensure that it is attached to the parent node of the prefab.
 
 ![Camera!](http://i.imgur.com/hE3wLJV.png)
 
@@ -49,14 +49,14 @@ UnityでWebVRに対応したWebGLビルドを行うテスト用のテンプレ�
 
 ###使い方
 WebGLTemplatesフォルダーを、
-* Windowsの場合  
+* Windowsの場合
   C:\Program Files\Unity\Editor\Data\PlaybackEngines\webglsupport\BuildToolsのフォルダーに上書きします。
-* Macの場合  
-  Assetsフォルダーにコピーします。  
+* Macの場合
+  Assetsフォルダーにコピーします。
 
-これで、Build Settings > WebGL > Player Settings > Publishing Settings > WebGL Template にWebVRというテンプレートが追加されます。  
+これで、Build Settings > WebGL > Player Settings > Publishing Settings > WebGL Template にWebVRというテンプレートが追加されます。
 
-次にWebVR Assetsフォルダー内のPrefabフォルダーとScriptsフォルダーをAssetsフォルダにコピーします。
+次にWebVRAssetsフォルダー内のPrefabフォルダーとScriptsフォルダーをAssetsフォルダにコピーします。
 PrefabsフォルダーにはWebVRCameraSetというPrefabがありますので、このカメラを適当に配置し、WebVRCameraSetにScriptsフォルダー内にあるStereoCamera.csをアタッチします。
 
 あとは、WebGLでWebVRテンプレートを使ってビルドを行い、出力されたindex.htmlにアクセスすればできます。
