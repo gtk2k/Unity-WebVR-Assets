@@ -1,0 +1,52 @@
+.btn {
+  background: rgba(70,147,217,0.85);
+  border: 0;
+  display: inline-block;
+  cursor: pointer;
+  font-family: inherit;
+  margin-left: 0.75rem;
+  transition: 0.075s background-color ease-in-out;
+  vertical-align: top;
+}
+
+.btn:hover {
+  background-color: rgb(70,147,217);
+}
+
+.btn:focus {
+  background-color: rgb(33,99,161);
+  outline: 0;
+}
+
+.btnEnterVr {
+  background-image: url(../TemplateData/vr-enter.svg);
+  background-position: 50% 7px;
+  background-repeat: no-repeat;
+  background-size: 38px auto;
+  color: #fff;
+  font-size: 0.5rem;
+  text-indent: -9999px;
+  text-transform: uppercase;
+  height: 38px;
+  min-width: 60px;
+  padding: 0 0.75rem;
+  position: relative;
+}
+
+.btnResetSensor {
+  background: #a6c;
+  color: #fff;
+  font-size: 0.8em;
+  font-family: inherit;
+  line-height: 38px;
+  /*opacity: 0.75;*/
+  padding: 0 1rem;
+}
+
+.btnResetSensor:hover {
+  background-color: #95b;
+}
+
+.btnResetSensor:focus {
+  background-color: #637;
+}

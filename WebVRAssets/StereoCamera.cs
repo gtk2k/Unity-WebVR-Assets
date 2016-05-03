@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 public class StereoCamera : MonoBehaviour {
-    
+
     Camera cameraMain, cameraL, cameraR;
     float eyeLFOVUpTan, eyeLFOVDownTan, eyeLFOVLeftTan, eyeLFOVRightTan;
     float eyeRFOVUpTan, eyeRFOVDownTan, eyeRFOVLeftTan, eyeRFOVRightTan;
@@ -35,7 +35,7 @@ public class StereoCamera : MonoBehaviour {
 
         changeMode("normal");
 
-        Application.ExternalCall("getVRDevices");
+        Application.ExternalCall("vrInit");
     }
 
     // Update is called once per frame
@@ -50,7 +50,7 @@ public class StereoCamera : MonoBehaviour {
         myTransform.position = pos;
     }
 
-    #region receive values form JavaScript 
+    #region receive values form JavaScript
 
     void eyeL_translation_x(float val)
     {
@@ -81,11 +81,11 @@ public class StereoCamera : MonoBehaviour {
     {
         eyeLFOVRightTan = (float)Math.Tan(val * DEG2RAD) * cameraMain.nearClipPlane;
         cameraL.projectionMatrix = PerspectiveOffCenter(
-            eyeLFOVLeftTan, 
-            eyeLFOVRightTan, 
-            eyeLFOVDownTan, 
-            eyeLFOVUpTan, 
-            cameraMain.nearClipPlane, 
+            eyeLFOVLeftTan,
+            eyeLFOVRightTan,
+            eyeLFOVDownTan,
+            eyeLFOVUpTan,
+            cameraMain.nearClipPlane,
             cameraMain.farClipPlane);
     }
 
