@@ -97,13 +97,13 @@
     var eyeParamsL = vrDisplay.getEyeParameters('left');
     var eyeParamsR = vrDisplay.getEyeParameters('right');
 
-    var eyeTranslationL = eyeParamsL.eyeTranslation;
-    var eyeTranslationR = eyeParamsR.eyeTranslation;
-    var eyeFOVL = eyeParamsL.recommendedFieldOfView;
-    var eyeFOVR = eyeParamsR.recommendedFieldOfView;
+    var eyeTranslationL = eyeParamsL.offset;
+    var eyeTranslationR = eyeParamsR.offset;
+    var eyeFOVL = eyeParamsL.fieldOfView;
+    var eyeFOVR = eyeParamsR.fieldOfView;
 
-    SendMessage('WebVRCameraSet', 'eyeL_translation_x', eyeTranslationL.x);
-    SendMessage('WebVRCameraSet', 'eyeR_translation_x', eyeTranslationR.x);
+    SendMessage('WebVRCameraSet', 'eyeL_translation_x', eyeTranslationL[0]);
+    SendMessage('WebVRCameraSet', 'eyeR_translation_x', eyeTranslationR[0]);
     SendMessage('WebVRCameraSet', 'eyeL_fovUpDegrees', eyeFOVL.upDegrees);
     SendMessage('WebVRCameraSet', 'eyeL_fovDownDegrees', eyeFOVL.downDegrees);
     SendMessage('WebVRCameraSet', 'eyeL_fovLeftDegrees', eyeFOVL.leftDegrees);
@@ -156,14 +156,15 @@
   function getVRSensorState () {
     // console.log('getVRSensorState', vrDisplay);
     var state = getPose();
-    var euler = new THREE.Euler().setFromQuaternion(state.orientation);
+    var quaternion = new THREE.Quaternion().fromArray(state.orientation);
+    var euler = new THREE.Euler().setFromQuaternion(quaternion);
     SendMessage('WebVRCameraSet', 'euler_x', euler.x);
     SendMessage('WebVRCameraSet', 'euler_y', euler.y);
     SendMessage('WebVRCameraSet', 'euler_z', euler.z);
     if (state.position !== null) {
-      SendMessage('WebVRCameraSet', 'position_x', state.position.x);
-      SendMessage('WebVRCameraSet', 'position_y', state.position.y);
-      SendMessage('WebVRCameraSet', 'position_z', state.position.z);
+      SendMessage('WebVRCameraSet', 'position_x', state.position[0]);
+      SendMessage('WebVRCameraSet', 'position_y', state.position[1]);
+      SendMessage('WebVRCameraSet', 'position_z', state.position[2]);
     }
   }
 
