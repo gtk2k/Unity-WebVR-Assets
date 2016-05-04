@@ -97,13 +97,13 @@
     var eyeParamsL = vrDisplay.getEyeParameters('left');
     var eyeParamsR = vrDisplay.getEyeParameters('right');
 
-    var eyeTranslationL = eyeParamsL.offset;
-    var eyeTranslationR = eyeParamsR.offset;
-    var eyeFOVL = eyeParamsL.fieldOfView;
-    var eyeFOVR = eyeParamsR.fieldOfView;
+    var eyeTranslationL = isDeprecatedAPI ? eyeParamsL.eyeTranslation.x : eyeParamsL.offset[0];
+    var eyeTranslationR = isDeprecatedAPI ? eyeParamsR.eyeTranslation.x : eyeParamsR.offset[0];
+    var eyeFOVL = isDeprecatedAPI ? eyeParamsL.recommendedFieldOfView : eyeParamsL.fieldOfView;
+    var eyeFOVR = isDeprecatedAPI ? eyeParamsR.recommendedFieldOfView : eyeParamsR.fieldOfView;
 
-    SendMessage('WebVRCameraSet', 'eyeL_translation_x', eyeTranslationL[0]);
-    SendMessage('WebVRCameraSet', 'eyeR_translation_x', eyeTranslationR[0]);
+    SendMessage('WebVRCameraSet', 'eyeL_translation_x', eyeTranslationL);
+    SendMessage('WebVRCameraSet', 'eyeR_translation_x', eyeTranslationR);
     SendMessage('WebVRCameraSet', 'eyeL_fovUpDegrees', eyeFOVL.upDegrees);
     SendMessage('WebVRCameraSet', 'eyeL_fovDownDegrees', eyeFOVL.downDegrees);
     SendMessage('WebVRCameraSet', 'eyeL_fovLeftDegrees', eyeFOVL.leftDegrees);
@@ -156,15 +156,18 @@
   function getVRSensorState () {
     // console.log('getVRSensorState', vrDisplay);
     var state = getPose();
-    var quaternion = new THREE.Quaternion().fromArray(state.orientation);
+    var quaternion = isDeprecatedAPI ? state.orientation : new THREE.Quaternion().fromArray(state.orientation);
     var euler = new THREE.Euler().setFromQuaternion(quaternion);
     SendMessage('WebVRCameraSet', 'euler_x', euler.x);
     SendMessage('WebVRCameraSet', 'euler_y', euler.y);
     SendMessage('WebVRCameraSet', 'euler_z', euler.z);
     if (state.position !== null) {
-      SendMessage('WebVRCameraSet', 'position_x', state.position[0]);
-      SendMessage('WebVRCameraSet', 'position_y', state.position[1]);
-      SendMessage('WebVRCameraSet', 'position_z', state.position[2]);
+      var positionX = isDeprecatedAPI ? state.position.x : state.position[0];
+      var positionY = isDeprecatedAPI ? state.position.y : state.position[1];
+      var positionZ = isDeprecatedAPI ? state.position.z : state.position[2];
+      SendMessage('WebVRCameraSet', 'position_x', positionX);
+      SendMessage('WebVRCameraSet', 'position_y', positionY);
+      SendMessage('WebVRCameraSet', 'position_z', positionZ);
     }
   }
 
@@ -205,7 +208,7 @@
         fsMethod = 'webkitRequestFullscreen';
         fsChangeEvent = 'webkitfullscreenchange';
       }
-
+      initEventListeners();
       getEyeParameters();
       // getVRSensorState();
       update();
