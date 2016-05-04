@@ -135,11 +135,19 @@
 
   function requestPresent () {
     // console.log('requestPresent', vrDisplay, canvas, fsMethod, isDeprecatedAPI);
+    if (vrDisplay.isPresenting) {
+      return exitPresent();
+    }
+
     if (isDeprecatedAPI) {
       return canvas[fsMethod]({vrDisplay: vrDisplay});
     } else {
       return vrDisplay.requestPresent([{source: canvas}]);
     }
+  }
+
+  function exitPresent () {
+    return vrDisplay.exitPresent();
   }
 
   function isPresenting () {
