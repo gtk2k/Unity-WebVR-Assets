@@ -12,6 +12,7 @@
   var isDeprecatedAPI = false;
   var vrDisplay;
   var vrSensor;
+  var eyeParamsL, eyeParamsR;
 
   btnEnterVr.addEventListener('click', vrEnterVr);
   btnResetSensor.addEventListener('click', vrResetSensor);
@@ -94,8 +95,8 @@
 
   function getEyeParameters () {
     // console.log('getEyeParameters', vrDisplay);
-    var eyeParamsL = vrDisplay.getEyeParameters('left');
-    var eyeParamsR = vrDisplay.getEyeParameters('right');
+    eyeParamsL = vrDisplay.getEyeParameters('left');
+    eyeParamsR = vrDisplay.getEyeParameters('right');
 
     var eyeTranslationL = isDeprecatedAPI ? eyeParamsL.eyeTranslation.x : eyeParamsL.offset[0];
     var eyeTranslationR = isDeprecatedAPI ? eyeParamsR.eyeTranslation.x : eyeParamsR.offset[0];
@@ -169,6 +170,14 @@
       SendMessage('WebVRCameraSet', 'position_y', positionY);
       SendMessage('WebVRCameraSet', 'position_z', positionZ);
     }
+    if (!isDeprecatedAPI) {
+      vrDisplay.submitFrame(state);
+    }
+  }
+
+  function resizeCanvas () {
+    canvas.width = Math.max(eyeParamsL.renderWidth, eyeParamsR.renderWidth) * 2;
+    canvas.height = Math.max(eyeParamsL.renderHeight, eyeParamsR.renderHeight);
   }
 
   function initEventListeners () {
@@ -185,6 +194,7 @@
       window.addEventListener('vrdisplaypresentchange', function () {
         if (isPresenting()) {
           SendMessage('WebVRCameraSet', 'changeMode', 'vr');
+          resizeCanvas();
         } else {
           SendMessage('WebVRCameraSet', 'changeMode', 'normal');
         }
