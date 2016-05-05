@@ -50,3 +50,7 @@
 .btnResetSensor:focus {
   background-color: #637;
 }
+
+.canvas-wrapper {
+  overflow: hidden;
+}

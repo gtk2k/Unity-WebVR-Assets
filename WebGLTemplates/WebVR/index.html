@@ -11,7 +11,9 @@
   <body class="template">
     <p class="header"><span>Unity WebGL Player | </span>%UNITY_WEB_NAME%</p>
     <div class="template-wrap clear">
-      <canvas class="emscripten" id="canvas" height="%UNITY_HEIGHT%" width="%UNITY_WIDTH%"></canvas>
+      <div class="canvas-wrapper" style="width: %UNITY_WIDTH%px; height: %UNITY_HEIGHT%px;">
+        <canvas class="emscripten" id="canvas" height="%UNITY_HEIGHT%" width="%UNITY_WIDTH%"></canvas>
+      </div>
       <div class="logo"></div>
       <div class="fullscreen">
         <button id="btnEnterVr" class="btn btnEnterVr" title="Enter VR">Enter VR</button>
