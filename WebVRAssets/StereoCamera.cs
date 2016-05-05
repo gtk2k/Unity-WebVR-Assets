@@ -48,6 +48,14 @@ public class StereoCamera : MonoBehaviour {
         var pos = webVRPosition;
         pos.z *= -1;
         myTransform.position = pos;
+        StartCoroutine(WaitEndOfFrame());
+    }
+
+    // Send post render update so we can submitFrame to vrDisplay.
+    IEnumerator WaitEndOfFrame()
+    {
+        yield return new WaitForEndOfFrame();
+        Application.ExternalCall("postRender");
     }
 
     #region receive values form JavaScript

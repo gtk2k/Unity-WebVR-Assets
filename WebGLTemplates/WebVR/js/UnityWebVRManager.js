@@ -12,6 +12,7 @@
   var isDeprecatedAPI = false;
   var vrDisplay;
   var vrSensor;
+  var pose;
   var eyeParamsL, eyeParamsR;
 
   btnEnterVr.addEventListener('click', vrEnterVr);
@@ -164,22 +165,19 @@
 
   function getVRSensorState () {
     // console.log('getVRSensorState', vrDisplay);
-    var state = getPose();
-    var quaternion = isDeprecatedAPI ? state.orientation : new THREE.Quaternion().fromArray(state.orientation);
+    pose = getPose();
+    var quaternion = isDeprecatedAPI ? pose.orientation : new THREE.Quaternion().fromArray(pose.orientation);
     var euler = new THREE.Euler().setFromQuaternion(quaternion);
     SendMessage('WebVRCameraSet', 'euler_x', euler.x);
     SendMessage('WebVRCameraSet', 'euler_y', euler.y);
     SendMessage('WebVRCameraSet', 'euler_z', euler.z);
-    if (state.position !== null) {
-      var positionX = isDeprecatedAPI ? state.position.x : state.position[0];
-      var positionY = isDeprecatedAPI ? state.position.y : state.position[1];
-      var positionZ = isDeprecatedAPI ? state.position.z : state.position[2];
+    if (pose.position !== null) {
+      var positionX = isDeprecatedAPI ? pose.position.x : pose.position[0];
+      var positionY = isDeprecatedAPI ? pose.position.y : pose.position[1];
+      var positionZ = isDeprecatedAPI ? pose.position.z : pose.position[2];
       SendMessage('WebVRCameraSet', 'position_x', positionX);
       SendMessage('WebVRCameraSet', 'position_y', positionY);
       SendMessage('WebVRCameraSet', 'position_z', positionZ);
-    }
-    if (!isDeprecatedAPI) {
-      vrDisplay.submitFrame(state);
     }
   }
 
@@ -210,6 +208,14 @@
     }
   }
 
+  // Post render callback from Unity.
+  window.postRender = function () {
+    if (!isDeprecatedAPI && isPresenting()) {
+      vrDisplay.submitFrame(pose);
+    }
+  };
+
+  // Initialization callback from Unity
   window.vrInit = function () {
     // console.log('… vrInit called');
     return getVRDisplays().then(function () {
