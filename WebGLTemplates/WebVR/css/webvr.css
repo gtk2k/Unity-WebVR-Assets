@@ -5,7 +5,7 @@
   cursor: pointer;
   font-family: inherit;
   margin-left: 0.75rem;
-  transition: 0.075s background-color ease-in-out;
+  transition: 0.075s background-color ease-in-out, 0.075s box-shadow ease-in-out;
   vertical-align: top;
 }
 
@@ -24,7 +24,7 @@
   background-repeat: no-repeat;
   background-size: 38px auto;
   color: #fff;
-  font-size: 0.5rem;
+  font-size: 0.55rem;
   text-indent: -9999px;
   text-transform: uppercase;
   height: 38px;
@@ -33,13 +33,35 @@
   position: relative;
 }
 
+.btnToggleVr:hover {
+  box-shadow: inset 0 0 0 2px rgb(33,73,110);
+}
+
+.btnToggleVr:after {
+  background: rgb(33,73,110);
+  bottom: -0.5rem;
+  content: attr(title);
+  left: 0;
+  line-height: 1rem;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  text-indent: 0;
+  transition: 0.075s bottom ease-in-out, 0.075s opacity ease-in-out;
+  width: 100%;
+}
+
+.btnToggleVr:hover:after {
+  bottom: -1rem;
+  opacity: 1;
+}
+
 .btnResetSensor {
   background: #a6c;
   color: #fff;
   font-size: 0.8em;
   font-family: inherit;
   line-height: 38px;
-  /*opacity: 0.75;*/
   padding: 0 1rem;
 }
 

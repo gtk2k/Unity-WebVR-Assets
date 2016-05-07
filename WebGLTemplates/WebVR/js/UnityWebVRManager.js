@@ -231,8 +231,10 @@
   function modeChange () {
     if (isPresenting()) {
       SendMessage('WebVRCameraSet', 'changeMode', 'vr');
+      vrToggleVr.textContent = vrToggleVr.title = vrToggleVr.dataset.exitVrTitle;
     } else {
       SendMessage('WebVRCameraSet', 'changeMode', 'normal');
+      vrToggleVr.textContent = vrToggleVr.title = vrToggleVr.dataset.exitVrTitle;
     }
     resizeCanvas();
   }
