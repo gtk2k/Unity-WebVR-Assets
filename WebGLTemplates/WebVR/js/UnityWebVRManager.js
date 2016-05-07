@@ -4,34 +4,75 @@
 
   // });
 
-  var btnEnterVr = document.querySelector('#btnEnterVr');
+  var btnToggleVr = document.querySelector('#btnToggleVr');
   var btnResetSensor = document.querySelector('#btnResetSensor');
   var canvas = document.querySelector('#canvas');
-  var fsChangeEvent;
-  var fsMethod;
+  var eyeParamsL;
+  var eyeParamsR;
+  var fullscreen;
   var isDeprecatedAPI = false;
   var vrDisplay;
   var vrSensor;
-  var pose;
-  var eyeParamsL, eyeParamsR;
+  var vrPose;
 
-  btnEnterVr.addEventListener('click', vrEnterVr);
+  btnToggleVr.addEventListener('click', vrToggleVr);
   btnResetSensor.addEventListener('click', vrResetSensor);
 
-  function vrEnterVr () {
-    btnEnterVr.blur();
+  function vrToggleVr () {
+    btnToggleVr.blur();
     if (!vrDisplay) {
-      throw '[vrEnterVr] No VR device was detected';
+      console.error('[vrToggleVr] No VR device was detected');
     }
-    return requestPresent();
+    if (isPresenting()) {
+      exitPresent();
+    } else {
+      requestPresent();
+    }
   }
 
   function vrResetSensor () {
     btnResetSensor.blur();
     if (!vrDisplay) {
-      throw '[vrResetSensor] No VR device was detected';
+      console.error('[vrResetSensor] No VR device was detected');
     }
     return resetSensor();
+  }
+
+  function Fullscreen (element) {
+    element = element || document.body;
+    this.isSupported = true;
+    if (element.requestFullscreen) {
+      this.element = 'fullscreenElement';
+      this.eventChange = 'fullscreenchange';
+      this.methodEnter = 'requestFullscreen';
+      this.methodExit = 'exitFullscreen';
+    } else if (element.mozRequestFullScreen) {
+      this.element = 'mozFullScreenElement';
+      this.eventChange = 'mozfullscreenchange';
+      this.methodEnter = 'mozRequestFullScreen';
+      this.methodExit = 'mozCancelFullScreen';
+    } else if (element.webkitRequestFullscreen) {
+      this.element = 'webkitFullscreenElement';
+      this.eventChange = 'webkitfullscreenchange';
+      this.methodEnter = 'webkitRequestFullscreen';
+      this.methodExit = 'webkitExitFullscreen';
+    } else if (element.msRequestFullscreen) {
+      this.element = 'msFullscreenElement';
+      this.eventChange = 'MSFullscreenChange';
+      this.methodEnter = 'msRequestFullscreen';
+      this.methodExit = 'msExitFullscreen';
+    } else {
+      this.isSupported = false;
+    }
+    this.isPresenting = function () {
+      return !!document[this.element];
+    }.bind(this);
+    this.enter = function (element, options) {
+      return element[this.methodEnter](options);
+    }.bind(this);
+    this.exit = function () {
+      return document[this.methodExit]();
+    }.bind(this);
   }
 
   function raf (cb) {
@@ -87,6 +128,7 @@
     } else if (navigator.getVRDevices) {
       // console.log('using navigator.getVRDevices');
       isDeprecatedAPI = true;
+      fullscreen = new Fullscreen();
       return navigator.getVRDevices().then(filterDevices);
     } else {
       // console.log('could not use navigator.getVRDevices nor navigator.getVRDisplays');
@@ -136,19 +178,19 @@
 
   function requestPresent () {
     // console.log('requestPresent', vrDisplay, canvas, fsMethod, isDeprecatedAPI);
-    if (vrDisplay.isPresenting) {
-      return exitPresent();
-    }
-
     if (isDeprecatedAPI) {
-      return canvas[fsMethod]({vrDisplay: vrDisplay});
+      return fullscreen.enter(canvas, {vrDisplay: vrDisplay});
     } else {
       return vrDisplay.requestPresent([{source: canvas}]);
     }
   }
 
   function exitPresent () {
-    return vrDisplay.exitPresent();
+    if (isDeprecatedAPI) {
+      return fullscreen.exit();
+    } else {
+      return vrDisplay.exitPresent();
+    }
   }
 
   function isPresenting () {
@@ -157,7 +199,7 @@
       return false;
     }
     if (isDeprecatedAPI) {
-      return !!(document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement);
+      return fullscreen.isPresenting();
     } else {
       return vrDisplay && vrDisplay.isPresenting;
     }
@@ -165,16 +207,16 @@
 
   function getVRSensorState () {
     // console.log('getVRSensorState', vrDisplay);
-    pose = getPose();
-    var quaternion = isDeprecatedAPI ? pose.orientation : new THREE.Quaternion().fromArray(pose.orientation);
+    vrPose = getPose();
+    var quaternion = isDeprecatedAPI ? vrPose.orientation : new THREE.Quaternion().fromArray(pose.orientation);
     var euler = new THREE.Euler().setFromQuaternion(quaternion);
     SendMessage('WebVRCameraSet', 'euler_x', euler.x);
     SendMessage('WebVRCameraSet', 'euler_y', euler.y);
     SendMessage('WebVRCameraSet', 'euler_z', euler.z);
-    if (pose.position !== null) {
-      var positionX = isDeprecatedAPI ? pose.position.x : pose.position[0];
-      var positionY = isDeprecatedAPI ? pose.position.y : pose.position[1];
-      var positionZ = isDeprecatedAPI ? pose.position.z : pose.position[2];
+    if (vrPose.position !== null) {
+      var positionX = isDeprecatedAPI ? vrPose.position.x : vrPose.position[0];
+      var positionY = isDeprecatedAPI ? vrPose.position.y : vrPose.position[1];
+      var positionZ = isDeprecatedAPI ? vrPose.position.z : vrPose.position[2];
       SendMessage('WebVRCameraSet', 'position_x', positionX);
       SendMessage('WebVRCameraSet', 'position_y', positionY);
       SendMessage('WebVRCameraSet', 'position_z', positionZ);
@@ -189,7 +231,7 @@
   function initEventListeners () {
     // console.log('initEventListeners');
     if (isDeprecatedAPI) {
-      document.addEventListener(fsChangeEvent, function () {
+      document.addEventListener(fullscreen.eventChange, function () {
         if (isPresenting()) {
           SendMessage('WebVRCameraSet', 'changeMode', 'vr');
         } else {
@@ -200,10 +242,10 @@
       window.addEventListener('vrdisplaypresentchange', function () {
         if (isPresenting()) {
           SendMessage('WebVRCameraSet', 'changeMode', 'vr');
-          resizeCanvas();
         } else {
           SendMessage('WebVRCameraSet', 'changeMode', 'normal');
         }
+        resizeCanvas();
       });
     }
   }
@@ -211,27 +253,15 @@
   // Post render callback from Unity.
   window.postRender = function () {
     if (!isDeprecatedAPI && isPresenting()) {
-      vrDisplay.submitFrame(pose);
+      vrDisplay.submitFrame(vrPose);
     }
   };
 
-  // Initialization callback from Unity
+  // Initialization callback from Unity (called by `StereoCamera.cs`).
   window.vrInit = function () {
     // console.log('… vrInit called');
     return getVRDisplays().then(function () {
-      if (canvas.requestFullscreen) {
-        // console.log('using requestFullscreen');
-        fsMethod = 'requestFullscreen';
-        fsChangeEvent = 'fullscreenchange';
-      } else if (canvas.mozRequestFullscreen) {
-        // console.log('using mozRequestFullScreen');
-        fsMethod = 'mozRequestFullScreen';
-        fsChangeEvent = 'mozfullscreenchange';
-      } else if (canvas.webkitRequestFullscreen) {
-        // console.log('using webkitRequestFullScreen');
-        fsMethod = 'webkitRequestFullscreen';
-        fsChangeEvent = 'webkitfullscreenchange';
-      }
+
       initEventListeners();
       getEyeParameters();
       // getVRSensorState();
@@ -239,11 +269,9 @@
     });
   };
 
-  var update = function () {
+  var update = window.update = function () {
     // console.log('update');
     getVRSensorState();
     raf(update);
   };
-
-  window.update = update;
 // })();

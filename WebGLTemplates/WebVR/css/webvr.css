@@ -18,7 +18,7 @@
   outline: 0;
 }
 
-.btnEnterVr {
+.btnToggleVr {
   background-image: url(../TemplateData/vr-enter.svg);
   background-position: 50% 7px;
   background-repeat: no-repeat;
