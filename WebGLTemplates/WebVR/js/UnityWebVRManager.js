@@ -228,25 +228,21 @@
     canvas.height = Math.max(eyeParamsL.renderHeight, eyeParamsR.renderHeight);
   }
 
+  function modeChange () {
+    if (isPresenting()) {
+      SendMessage('WebVRCameraSet', 'changeMode', 'vr');
+    } else {
+      SendMessage('WebVRCameraSet', 'changeMode', 'normal');
+    }
+    resizeCanvas();
+  }
+
   function initEventListeners () {
     // console.log('initEventListeners');
     if (isDeprecatedAPI) {
-      document.addEventListener(fullscreen.eventChange, function () {
-        if (isPresenting()) {
-          SendMessage('WebVRCameraSet', 'changeMode', 'vr');
-        } else {
-          SendMessage('WebVRCameraSet', 'changeMode', 'normal');
-        }
-      });
+      document.addEventListener(fullscreen.eventChange, modeChange);
     } else {
-      window.addEventListener('vrdisplaypresentchange', function () {
-        if (isPresenting()) {
-          SendMessage('WebVRCameraSet', 'changeMode', 'vr');
-        } else {
-          SendMessage('WebVRCameraSet', 'changeMode', 'normal');
-        }
-        resizeCanvas();
-      });
+      window.addEventListener('vrdisplaypresentchange', modeChange);
     }
   }
 
