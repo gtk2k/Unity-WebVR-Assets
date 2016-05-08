@@ -1,16 +1,25 @@
 .btn {
-  background: rgba(70,147,217,0.85);
+  background-color: rgba(70,147,217,0.85);
+  background-repeat: no-repeat;
   border: 0;
-  display: inline-block;
+  color: #fff;
   cursor: pointer;
+  display: inline-block;
   font-family: inherit;
+  font-size: 0.55rem;
+  height: 38px;
   margin-left: 0.75rem;
+  min-width: 70px;
+  padding: 0 0.75rem;
+  position: relative;
+  text-indent: -9999px;
+  text-transform: uppercase;
   transition: 0.075s background-color ease-in-out, 0.075s box-shadow ease-in-out;
   vertical-align: top;
 }
 
 .btn:hover {
-  background-color: rgb(70,147,217);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,.5);
 }
 
 .btn:focus {
@@ -18,27 +27,7 @@
   outline: 0;
 }
 
-.btnToggleVr {
-  background-image: url(../TemplateData/vr-enter.svg);
-  background-position: 50% 7px;
-  background-repeat: no-repeat;
-  background-size: 38px auto;
-  color: #fff;
-  font-size: 0.55rem;
-  text-indent: -9999px;
-  text-transform: uppercase;
-  height: 38px;
-  min-width: 60px;
-  padding: 0 0.75rem;
-  position: relative;
-}
-
-.btnToggleVr:hover {
-  box-shadow: inset 0 0 0 2px rgb(33,73,110);
-}
-
-.btnToggleVr:after {
-  background: rgb(33,73,110);
+.btn:after {
   bottom: -0.5rem;
   content: attr(title);
   left: 0;
@@ -51,22 +40,29 @@
   width: 100%;
 }
 
-.btnToggleVr:hover:after {
+.btn:hover:after {
   bottom: -1rem;
   opacity: 1;
 }
 
-.btnResetSensor {
-  background: #a6c;
-  color: #fff;
-  font-size: 0.8em;
-  font-family: inherit;
-  line-height: 38px;
-  padding: 0 1rem;
+.btnToggleVr {
+  background-image: url(../TemplateData/vr-icon-toggle.svg);
+  background-position: 50% 7px;
+  background-size: auto 30px;
 }
 
-.btnResetSensor:hover {
-  background-color: #95b;
+.btnToggleVr:after {
+  background: rgb(33,73,110);
+}
+
+.btnResetSensor {
+  background: #a6c url(../TemplateData/vr-icon-reset-sensor.svg) 50% 7px no-repeat;
+  background-size: auto 30px;
+  min-width: 100px;
+}
+
+.btnResetSensor:after {
+  background: rgb(73,33,110);
 }
 
 .btnResetSensor:focus {

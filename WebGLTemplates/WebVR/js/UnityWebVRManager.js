@@ -132,7 +132,7 @@
       return navigator.getVRDevices().then(filterDevices);
     } else {
       // console.log('could not use navigator.getVRDevices nor navigator.getVRDisplays');
-      throw 'Your browser is not VR ready';
+      console.error('Your browser is not VR ready');
     }
   }
 
