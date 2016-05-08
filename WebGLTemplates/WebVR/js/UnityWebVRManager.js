@@ -1,39 +1,41 @@
 /* global HMDVRDevice, PositionSensorVRDevice, SendMessage, THREE, VRDisplay */
 // (function () {
   // window.addEventListener('load', function () {
-
   // });
 
-  var btnToggleVr = document.querySelector('#btnToggleVr');
-  var btnResetSensor = document.querySelector('#btnResetSensor');
+  var btnVrToggleMode = document.querySelector('#btnVrToggleMode');
+  var btnVrResetSensor = document.querySelector('#btnVrResetSensor');
   var canvas = document.querySelector('#canvas');
   var eyeParamsL;
   var eyeParamsR;
   var fullscreen;
-  var isDeprecatedAPI = false;
+  var isDeprecatedAPI = 'getVRDevices' in navigator;
+  var isSupported = 'getVRDisplays' in navigator || isDeprecatedAPI;
   var vrDisplay;
   var vrSensor;
   var vrPose;
 
-  btnToggleVr.addEventListener('click', vrToggleVr);
-  btnResetSensor.addEventListener('click', vrResetSensor);
+  btnVrToggleMode.addEventListener('click', vrToggle);
+  btnVrResetSensor.addEventListener('click', vrResetSensor);
 
-  function vrToggleVr () {
-    btnToggleVr.blur();
+  function vrToggle () {
+    btnVrToggleMode.blur();
     if (!vrDisplay) {
-      console.error('[vrToggleVr] No VR device was detected');
+      console.error('[vrToggle] No VR device was detected');
+      return;
     }
     if (isPresenting()) {
-      exitPresent();
+      return exitPresent();
     } else {
-      requestPresent();
+      return requestPresent();
     }
   }
 
   function vrResetSensor () {
-    btnResetSensor.blur();
+    btnVrResetSensor.blur();
     if (!vrDisplay) {
       console.error('[vrResetSensor] No VR device was detected');
+      return;
     }
     return resetSensor();
   }
@@ -124,15 +126,16 @@
 
     if (navigator.getVRDisplays) {
       // console.log('using navigator.getVRDisplays');
+      isSupported = true;
       return navigator.getVRDisplays().then(filterDevices);
     } else if (navigator.getVRDevices) {
       // console.log('using navigator.getVRDevices');
+      isSupported = true;
       isDeprecatedAPI = true;
       fullscreen = new Fullscreen();
       return navigator.getVRDevices().then(filterDevices);
     } else {
-      // console.log('could not use navigator.getVRDevices nor navigator.getVRDisplays');
-      console.error('Your browser is not VR ready');
+      throw 'Your browser is not VR ready';
     }
   }
 
@@ -231,10 +234,10 @@
   function modeChange () {
     if (isPresenting()) {
       SendMessage('WebVRCameraSet', 'changeMode', 'vr');
-      vrToggleVr.textContent = vrToggleVr.title = vrToggleVr.dataset.exitVrTitle;
+      btnVrToggleMode.textContent = btnVrToggleMode.title = btnVrToggleMode.dataset.exitVrTitle;
     } else {
       SendMessage('WebVRCameraSet', 'changeMode', 'normal');
-      vrToggleVr.textContent = vrToggleVr.title = vrToggleVr.dataset.exitVrTitle;
+      btnVrToggleMode.textContent = btnVrToggleMode.title = btnVrToggleMode.dataset.exitVrTitle;
     }
     resizeCanvas();
   }
@@ -248,7 +251,7 @@
     }
   }
 
-  // Post render callback from Unity.
+  // Post-render callback from Unity.
   window.postRender = function () {
     if (!isDeprecatedAPI && isPresenting()) {
       vrDisplay.submitFrame(vrPose);
@@ -258,11 +261,12 @@
   // Initialization callback from Unity (called by `StereoCamera.cs`).
   window.vrInit = function () {
     // console.log('… vrInit called');
-    return getVRDisplays().then(function () {
-
+    if (!isSupported) {
+      return;
+    }
+    getVRDisplays().then(function () {
       initEventListeners();
       getEyeParameters();
-      // getVRSensorState();
       update();
     });
   };

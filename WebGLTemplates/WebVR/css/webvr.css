@@ -1,5 +1,5 @@
 .btn {
-  background-color: rgba(70,147,217,0.85);
+  background-color: #444;
   background-repeat: no-repeat;
   border: 0;
   color: #fff;
@@ -8,6 +8,7 @@
   font-family: inherit;
   font-size: 0.55rem;
   height: 38px;
+  margin-bottom: 1.75rem;
   margin-left: 0.75rem;
   min-width: 70px;
   opacity: 0.85;
@@ -20,12 +21,11 @@
 }
 
 .btn:hover {
-  box-shadow: inset 0 0 0 2px rgba(0,0,0,.5);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.5);
   opacity: 1;
 }
 
 .btn:focus {
-  background-color: rgb(33,99,161);
   outline: 0;
 }
 
@@ -47,27 +47,30 @@
   opacity: 1;
 }
 
-.btnToggleVr {
-  background-image: url(../TemplateData/vr-icon-toggle.svg);
-  background-position: 50% 7px;
+.btnVrToggleMode {
+  background: rgba(70,147,217,0.85) url(../TemplateData/vr-icon-toggle.svg) 50% 7px no-repeat;
   background-size: auto 30px;
 }
 
-.btnToggleVr:after {
+.btnVrToggleMode:after {
   background: rgb(33,73,110);
 }
 
-.btnResetSensor {
+.btnVrToggleMode:focus {
+  background-color: rgb(33,99,161);
+}
+
+.btnVrResetSensor {
   background: #a6c url(../TemplateData/vr-icon-reset-sensor.svg) 50% 7px no-repeat;
   background-size: auto 30px;
   min-width: 100px;
 }
 
-.btnResetSensor:after {
+.btnVrResetSensor:after {
   background: rgb(73,33,110);
 }
 
-.btnResetSensor:focus {
+.btnVrResetSensor:focus {
   background-color: #637;
 }
 
