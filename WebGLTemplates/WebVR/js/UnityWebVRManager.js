@@ -289,7 +289,7 @@
       initVrEventListeners();
       getEyeParameters();
       resizeCanvas();
-      update();
+      window.requestAnimationFrame(update);
     }).catch(console.error.bind(console));
   };
 
