@@ -7,9 +7,7 @@
   cursor: progress;
   opacity: 0.65;
 }
-[data-unity-loaded="false"] .btn {
-  pointer-events: none;
-}
+[data-unity-loaded="false"] .btn,
 [data-vr-loaded="false"] .vrBtn {
   pointer-events: none;
 }
