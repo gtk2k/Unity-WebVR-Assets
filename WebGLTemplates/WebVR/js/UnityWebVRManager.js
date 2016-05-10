@@ -246,8 +246,15 @@
 
   function resizeCanvas () {
     if (isPresenting()) {
-      canvas.width = Math.max(eyeParamsL.renderWidth, eyeParamsR.renderWidth) * 2;
-      canvas.height = Math.max(eyeParamsL.renderHeight, eyeParamsR.renderHeight);
+      if (isDeprecatedAPI) {
+        canvas.width = Math.max(eyeParamsL.renderRect.width * 2, eyeParamsL.renderRect.height);
+        canvas.height = Math.max(eyeParamsL.renderRect.height, eyeParamsL.renderRect.height);
+      } else {
+        // canvas.width = Math.max(eyeParamsL.renderWidth * 2, eyeParamsL.renderHeight);
+        // canvas.height = Math.max(eyeParamsL.renderHeight, eyeParamsL.renderHeight);
+        // TODO: Figure out how to properly mirror the canvas stereoscopically with the v1.0 API in Chromium.
+        // See https://github.com/toji/webvr-samples/blob/633a43e/04-simple-mirroring.html#L227-L231
+      }
     } else {
       revertCanvas();
     }
