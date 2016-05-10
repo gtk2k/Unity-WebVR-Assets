@@ -8,7 +8,7 @@
     <script src="TemplateData/UnityProgress.js"></script>
     <link rel="stylesheet" href="css/webvr.css">
   </head>
-  <body class="template" data-unity-width="%UNITY_WIDTH%" data-unity-height="%UNITY_HEIGHT%" data-supports-vr="false">
+  <body class="template" data-unity-width="960" data-unity-height="600" data-unity-loaded="false" data-vr-loaded="false" data-supports-vr="false">
     <p class="header"><span>Unity WebGL Player | </span>%UNITY_WEB_NAME%</p>
     <div class="template-wrap clear">
       <div class="canvas-wrapper" style="width: %UNITY_WIDTH%px; height: %UNITY_HEIGHT%px;">
@@ -16,9 +16,11 @@
       </div>
       <div class="logo"></div>
       <div class="fullscreen">
-        <button id="btnFs" class="btn btnFs waiting" title="Enter Fullscreen">Enter Fullscreen</button>
         <button id="btnVrToggle" class="btn btnVr btnVrToggle waiting" data-enter-vr-title="Enter VR" data-exit-vr-title="Exit VR" title="Enter VR">Enter VR</button>
-        <button id="btnVrReset" class="btn btnVrReset waiting" title="Reset Sensor">Reset Sensor</button>
+        <div class="vr">
+          <button id="btnVrReset" class="btn btnVr btnVrReset waiting" title="Reset View">Reset View</button>
+          <button id="btnFsEnter" class="btn btnFsEnter waiting" title="Fullscreen">Fullscreen</button>
+        </div>
       </div>
       <div class="title">%UNITY_WEB_NAME%</div>
     </div>

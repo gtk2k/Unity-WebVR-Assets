@@ -1,92 +1,115 @@
+.fullscreen .vr {
+  display: inline-block;
+}
+
+[data-unity-loaded="false"] .fullscreen,
+[data-unity-loaded="false"] .vr {
+  cursor: progress;
+  opacity: 0.65;
+}
+[data-unity-loaded="false"] .btn {
+  pointer-events: none;
+}
+[data-vr-loaded="false"] .vrBtn {
+  pointer-events: none;
+}
+
 .btn {
   background-color: #444;
-  background-repeat: no-repeat;
-  background-position: 50% 7px;
-  background-size: auto 30px;
   border: 0;
-  color: #fff;
+  color: transparent;
   cursor: pointer;
   display: inline-block;
   font-family: inherit;
   font-size: 0.55rem;
   height: 38px;
-  margin-bottom: 1.75rem;
-  margin-left: 0.75rem;
+  line-height: 90px;
+  margin-bottom: 35px;
+  margin-left: 0.5rem;
   min-width: 70px;
-  opacity: 0.85;
-  padding: 0 0.75rem;
+  opacity: 0.9;
+  overflow: hidden;
+  padding: 0 0.35rem;
   position: relative;
-  text-indent: -9999px;
+  text-align: center;
+  text-overflow: ellipsis;
   text-transform: uppercase;
-  transition: 0.075s background-color ease-in-out, 0.075s box-shadow ease-in-out;
+  transition: 0.075s all ease-in-out;
   vertical-align: top;
+  white-space: nowrap;
 }
 .btn:focus {
   outline: 0;
 }
 .btn:hover {
-  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.5);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.75),
+              inset 0 -15px 0 2px rgba(0,0,0,0.75);
+  color: #fff;
+  line-height: 95px;
   opacity: 1;
+  height: 55px;
+  margin-bottom: 17px;
 }
 .btn:after {
-  bottom: -0.5rem;
-  content: attr(title);
-  left: 0;
-  line-height: 1rem;
-  opacity: 0;
+  background-repeat: no-repeat;
+  background-position: 50% 7px;
+  background-size: auto 30px;
+  content: "";
+  transition: 0.175s background-color ease-in-out,
+              0.075s height ease-in-out;
   position: absolute;
-  right: 0;
-  text-indent: 0;
-  transition: 0.075s bottom ease-in-out, 0.075s opacity ease-in-out;
+  height: 100%;
   width: 100%;
+  top: 0px;
+  right: 0;
+  left: 0;
 }
 .btn:hover:after {
-  bottom: -1rem;
-  opacity: 1;
+  height: 58px;
 }
 
 .btnVr {
   display: none;
 }
 [data-supports-vr="true"] .btnVr {
-  display: block;
+  display: inline-block;
 }
 
-.btnFs {
-  background-color: rgba(70,147,217,0.85);
-  background-image: url(../TemplateData/fullscreen.png);
+.btnFsEnter {
+  background-color: hsla(150, 60%, 40%, 0.85);
+}
+.btnFsEnter:after {
+  background-image: url(../TemplateData/fullscreen.svg);
+}
+.btnFsEnter:hover {
+  background-color: hsla(150, 60%, 40%, 1);
+}
+.btnFsEnter:focus {
+  background-color: hsla(150, 60%, 60%, 1);
 }
 
 .btnVrToggle {
-  background-color: rgba(70,147,217,0.85);
-  bcakground-image: url(../TemplateData/vr-icon-toggle.svg);
+  background-color: hsla(200, 60%, 40%, 0.85);
 }
 .btnVrToggle:after {
-  background: rgb(33,73,110);
+  background-image: url(../TemplateData/vr-toggle.svg);
+}
+.btnVrToggle:hover {
+  background-color: hsla(200, 60%, 40%, 1);
 }
 .btnVrToggle:focus {
-  background-color: rgb(33,99,161);
+  background-color: hsla(200, 60%, 60%, 1);
 }
 
 .btnVrReset {
-  background-color: #a6c;
-  background-image: url(../TemplateData/vr-icon-reset-sensor.svg);
-  min-width: 100px;
+  background-color: hsla(350, 60%, 40%, 0.85);
 }
 .btnVrReset:after {
-  background: rgb(73,33,110);
+  background-image: url(../TemplateData/vr-reset.svg);
+}
+.btnVrReset:hover {
+  background-color: hsla(350, 60%, 40%, 1);
 }
 .btnVrReset:focus {
-  background-color: #637;
+  background-color: hsla(350, 60%, 60%, 1);
 }
-
-.canvas-wrapper {
-  overflow: hidden;
-}
-
-/*.emscripten {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-}
-*/
