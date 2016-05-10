@@ -1,6 +1,8 @@
 .btn {
   background-color: #444;
   background-repeat: no-repeat;
+  background-position: 50% 7px;
+  background-size: auto 30px;
   border: 0;
   color: #fff;
   cursor: pointer;
@@ -19,16 +21,13 @@
   transition: 0.075s background-color ease-in-out, 0.075s box-shadow ease-in-out;
   vertical-align: top;
 }
-
+.btn:focus {
+  outline: 0;
+}
 .btn:hover {
   box-shadow: inset 0 0 0 2px rgba(0,0,0,0.5);
   opacity: 1;
 }
-
-.btn:focus {
-  outline: 0;
-}
-
 .btn:after {
   bottom: -0.5rem;
   content: attr(title);
@@ -41,39 +40,53 @@
   transition: 0.075s bottom ease-in-out, 0.075s opacity ease-in-out;
   width: 100%;
 }
-
 .btn:hover:after {
   bottom: -1rem;
   opacity: 1;
 }
 
-.btnVrToggleMode {
-  background: rgba(70,147,217,0.85) url(../TemplateData/vr-icon-toggle.svg) 50% 7px no-repeat;
-  background-size: auto 30px;
+.btnVr {
+  display: none;
+}
+[data-supports-vr="true"] .btnVr {
+  display: block;
 }
 
-.btnVrToggleMode:after {
+.btnFs {
+  background-color: rgba(70,147,217,0.85);
+  background-image: url(../TemplateData/fullscreen.png);
+}
+
+.btnVrToggle {
+  background-color: rgba(70,147,217,0.85);
+  bcakground-image: url(../TemplateData/vr-icon-toggle.svg);
+}
+.btnVrToggle:after {
   background: rgb(33,73,110);
 }
-
-.btnVrToggleMode:focus {
+.btnVrToggle:focus {
   background-color: rgb(33,99,161);
 }
 
-.btnVrResetSensor {
-  background: #a6c url(../TemplateData/vr-icon-reset-sensor.svg) 50% 7px no-repeat;
-  background-size: auto 30px;
+.btnVrReset {
+  background-color: #a6c;
+  background-image: url(../TemplateData/vr-icon-reset-sensor.svg);
   min-width: 100px;
 }
-
-.btnVrResetSensor:after {
+.btnVrReset:after {
   background: rgb(73,33,110);
 }
-
-.btnVrResetSensor:focus {
+.btnVrReset:focus {
   background-color: #637;
 }
 
 .canvas-wrapper {
   overflow: hidden;
 }
+
+/*.emscripten {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+*/
