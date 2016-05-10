@@ -26,6 +26,14 @@
     fullscreen.enter(canvas);
   }
 
+  function toggleFs () {
+    if (fullscreen.isPresenting()) {
+      fullscreen.enter(canvas);
+    } else {
+      fullscreen.exit();
+    }
+  }
+
   function btnVrToggleOnClick () {
     btnVrToggle.blur();
     if (vrDisplay) {
@@ -44,6 +52,13 @@
     }
   }
 
+  function shouldCaptureKeyEvent (e) {
+    if (e.shiftKey || e.metaKey || e.altKey || e.ctrlKey) {
+      return false;
+    }
+    return document.activeElement === document.body;
+  }
+
   function initUnityLoaded () {
     document.body.dataset.unityLoaded = 'true';
   }
@@ -54,7 +69,33 @@
     }
   }
 
+  function initFsEventListeners () {
+    window.addEventListener('keyup', function (e) {
+      if (!shouldCaptureKeyEvent(e)) {
+        return;
+      }
+      if (e.keyCode === 70) {  // `f`.
+        if (isSupported) {
+          togglePresent();
+        } else {
+          toggleFs();
+        }
+      }
+    });
+  }
+
   function initVrEventListeners () {
+    window.addEventListener('keyup', function (e) {
+      if (!shouldCaptureKeyEvent(e)) {
+        return;
+      }
+      if (e.keyCode === 27) {  // `Esc`.
+        exitPresent();
+      }
+      if (e.keyCode === 90) {  // `z`.
+        resetPose();
+      }
+    });
     if (isDeprecatedAPI) {
       document.addEventListener(fullscreen.eventChange, modeChange);
     } else {
@@ -174,6 +215,9 @@
   }
 
   function togglePresent () {
+    if (!vrDisplay) {
+      return;
+    }
     if (isPresenting()) {
       return exitPresent();
     } else {
@@ -182,6 +226,9 @@
   }
 
   function resetPose () {
+    if (!vrDisplay) {
+      return;
+    }
     if (isDeprecatedAPI) {
       return vrSensor.resetSensor();
     } else {
@@ -206,6 +253,9 @@
   }
 
   function exitPresent () {
+    if (!isPresenting()) {
+      return;
+    }
     if (isDeprecatedAPI) {
       return fullscreen.exit();
     } else {
@@ -250,8 +300,8 @@
         canvas.width = Math.max(eyeParamsL.renderRect.width * 2, eyeParamsL.renderRect.height);
         canvas.height = Math.max(eyeParamsL.renderRect.height, eyeParamsL.renderRect.height);
       } else {
-        // canvas.width = Math.max(eyeParamsL.renderWidth * 2, eyeParamsL.renderHeight);
-        // canvas.height = Math.max(eyeParamsL.renderHeight, eyeParamsL.renderHeight);
+        canvas.width = Math.max(eyeParamsL.renderWidth * 2, eyeParamsL.renderHeight);
+        canvas.height = Math.max(eyeParamsL.renderHeight, eyeParamsL.renderHeight);
         // TODO: Figure out how to properly mirror the canvas stereoscopically with the v1.0 API in Chromium.
         // See https://github.com/toji/webvr-samples/blob/633a43e/04-simple-mirroring.html#L227-L231
       }
@@ -286,6 +336,7 @@
   // Initialisation callback from Unity (called by `StereoCamera.cs`).
   window.vrInit = function () {
     initUnityLoaded();
+    initFsEventListeners();
     if (!isSupported) {
       // Bail early in case browser lacks Promises support (for below).
       console.warn('WebVR is not supported');
