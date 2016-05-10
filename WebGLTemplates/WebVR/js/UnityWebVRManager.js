@@ -54,13 +54,14 @@
     }
   }
 
-  function initEventListeners () {
+  function initVrEventListeners () {
     if (isDeprecatedAPI) {
       document.addEventListener(fullscreen.eventChange, modeChange);
     } else {
       window.addEventListener('vrdisplaypresentchange', modeChange);
     }
     window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('beforeunload', exitPresent);
   }
 
   function Fullscreen (element) {
@@ -285,7 +286,7 @@
     }
     getDisplays().then(function () {
       initVrLoaded();
-      initEventListeners();
+      initVrEventListeners();
       getEyeParameters();
       resizeCanvas();
       update();
