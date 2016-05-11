@@ -1,3 +1,28 @@
+.canvas-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Hides Chromium mirroring issue (see https://github.com/gtk2k/Unity-WebVR-Sample-Assets/issues/14). */
+[data-vr-is-presenting="true"][data-supports-vr-chromium="true"] .canvas-wrapper:before {
+  align-items: flex-end;
+  background: #336 url(../TemplateData/vr-toggle.svg) 50% 100% no-repeat;
+  background-position: 50% calc(100% - 4rem);
+  background-size: auto 10rem;
+  bottom: 0;
+  color: #dde;
+  content: attr(data-vr-presentation-text);
+  display: flex;
+  font: 300 2rem/1.1 Consolas, Andale Mono, monaco, monospace;
+  justify-content: center;
+  left: 0;
+  padding-bottom: 3rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+
 .fullscreen .vr {
   display: inline-block;
 }
