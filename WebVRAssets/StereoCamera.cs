@@ -2,8 +2,7 @@
 using System.Collections;
 using System;
 
-public class StereoCamera : MonoBehaviour
-{
+public class StereoCamera : MonoBehaviour {
 
     Camera cameraMain, cameraL, cameraR;
     float eyeLFOVUpTan, eyeLFOVDownTan, eyeLFOVLeftTan, eyeLFOVRightTan;
