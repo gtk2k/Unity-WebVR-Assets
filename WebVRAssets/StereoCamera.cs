@@ -2,7 +2,8 @@
 using System.Collections;
 using System;
 
-public class StereoCamera : MonoBehaviour {
+public class StereoCamera : MonoBehaviour
+{
 
     Camera cameraMain, cameraL, cameraR;
     float eyeLFOVUpTan, eyeLFOVDownTan, eyeLFOVLeftTan, eyeLFOVRightTan;
@@ -15,7 +16,8 @@ public class StereoCamera : MonoBehaviour {
     Vector3 myStartPosition;
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         cameraMain = GameObject.Find("CameraMain").GetComponent<Camera>();
         cameraL = GameObject.Find("CameraL").GetComponent<Camera>();
         cameraR = GameObject.Find("CameraR").GetComponent<Camera>();
@@ -41,7 +43,8 @@ public class StereoCamera : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         var unityEuler = ConvertWebVREulerToUnity(webVREuler);
         unityEuler.x = -unityEuler.x;
         unityEuler.z = -unityEuler.z;
@@ -53,34 +56,41 @@ public class StereoCamera : MonoBehaviour {
     }
 
     // Send post render update so we can submitFrame to vrDisplay.
-    IEnumerator WaitEndOfFrame() {
+    IEnumerator WaitEndOfFrame()
+    {
         yield return new WaitForEndOfFrame();
         Application.ExternalCall("postRender");
     }
 
     #region receive values form JavaScript
 
-    void eyeL_translation_x(float val) {
+    void eyeL_translation_x(float val)
+    {
         cameraLTransform.position.Set(val, 0, 0);
     }
 
-    void eyeR_translation_x(float val) {
+    void eyeR_translation_x(float val)
+    {
         cameraRTransform.position.Set(val, 0, 0);
     }
 
-    void eyeL_fovUpDegrees(float val) {
+    void eyeL_fovUpDegrees(float val)
+    {
         eyeLFOVUpTan = (float)Math.Tan(val * DEG2RAD) * cameraMain.nearClipPlane;
     }
 
-    void eyeL_fovDownDegrees(float val) {
+    void eyeL_fovDownDegrees(float val)
+    {
         eyeLFOVDownTan = -(float)Math.Tan(val * DEG2RAD) * cameraMain.nearClipPlane;
     }
 
-    void eyeL_fovLeftDegrees(float val) {
+    void eyeL_fovLeftDegrees(float val)
+    {
         eyeLFOVLeftTan = -(float)Math.Tan(val * DEG2RAD) * cameraMain.nearClipPlane;
     }
 
-    void eyeL_fovRightDegrees(float val) {
+    void eyeL_fovRightDegrees(float val)
+    {
         eyeLFOVRightTan = (float)Math.Tan(val * DEG2RAD) * cameraMain.nearClipPlane;
         cameraL.projectionMatrix = PerspectiveOffCenter(
             eyeLFOVLeftTan,
@@ -91,20 +101,25 @@ public class StereoCamera : MonoBehaviour {
             cameraMain.farClipPlane);
     }
 
-    void eyeR_fovUpDegrees(float val) {
+    void eyeR_fovUpDegrees(float val)
+    {
         eyeRFOVUpTan = (float)Math.Tan(val * DEG2RAD) * cameraMain.nearClipPlane;
     }
 
-    void eyeR_fovDownDegrees(float val) {
+    void eyeR_fovDownDegrees(float val)
+    {
         eyeRFOVDownTan = -(float)Math.Tan(val * DEG2RAD) * cameraMain.nearClipPlane;
     }
 
-    void eyeR_fovLeftDegrees(float val) {
+    void eyeR_fovLeftDegrees(float val)
+    {
         eyeRFOVLeftTan = -(float)Math.Tan(val * DEG2RAD) * cameraMain.nearClipPlane;
     }
 
-    void eyeR_fovRightDegrees(float val) {
-        try {
+    void eyeR_fovRightDegrees(float val)
+    {
+        try
+        {
             eyeRFOVRightTan = (float)Math.Tan(val * DEG2RAD) * cameraMain.nearClipPlane;
             var m = PerspectiveOffCenter(
                 eyeRFOVLeftTan,
@@ -115,37 +130,46 @@ public class StereoCamera : MonoBehaviour {
                 cameraMain.farClipPlane);
             cameraR.projectionMatrix = m;
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             Application.ExternalEval("console.log('" + ex.StackTrace + "')");
         }
     }
 
-    void euler_x(float val) {
+    void euler_x(float val)
+    {
         webVREuler.x = val;
     }
 
-    void euler_y(float val) {
+    void euler_y(float val)
+    {
         webVREuler.y = val;
     }
 
-    void euler_z(float val) {
+    void euler_z(float val)
+    {
         webVREuler.z = val;
     }
 
-    void position_x(float val) {
+    void position_x(float val)
+    {
         webVRPosition.x = val;
     }
 
-    void position_y(float val) {
+    void position_y(float val)
+    {
         webVRPosition.y = val;
     }
 
-    void position_z(float val) {
+    void position_z(float val)
+    {
         webVRPosition.z = val;
     }
 
-    void changeMode(string mode) {
-        switch (mode) {
+    void changeMode(string mode)
+    {
+        switch (mode)
+        {
             case "normal":
                 cameraMain.GetComponent<Camera>().enabled = true;
                 cameraL.GetComponent<Camera>().enabled = false;
@@ -161,7 +185,8 @@ public class StereoCamera : MonoBehaviour {
 
     #endregion
 
-    static Matrix4x4 PerspectiveOffCenter(float left, float right, float bottom, float top, float near, float far) {
+    static Matrix4x4 PerspectiveOffCenter(float left, float right, float bottom, float top, float near, float far)
+    {
         float x = 2.0F * near / (right - left);
         float y = 2.0F * near / (top - bottom);
         float a = (right + left) / (right - left);
@@ -194,7 +219,8 @@ public class StereoCamera : MonoBehaviour {
     /// <summary>
     /// Converts the given XYZ euler rotation taken from Threejs to a Unity Euler rotation
     /// </summary>
-    Vector3 ConvertWebVREulerToUnity(Vector3 eulerThreejs) {
+    Vector3 ConvertWebVREulerToUnity(Vector3 eulerThreejs)
+    {
         eulerThreejs.x *= -1;
         eulerThreejs.z *= -1;
         Matrix4x4 threejsMatrix = CreateRotationalMatrixThreejs(ref eulerThreejs);
@@ -212,7 +238,8 @@ public class StereoCamera : MonoBehaviour {
     /// <summary>
     /// Creates a rotation matrix for the given threejs euler rotation
     /// </summary>
-    Matrix4x4 CreateRotationalMatrixThreejs(ref Vector3 eulerThreejs) {
+    Matrix4x4 CreateRotationalMatrixThreejs(ref Vector3 eulerThreejs)
+    {
         float c1 = Mathf.Cos(eulerThreejs.x);
         float c2 = Mathf.Cos(eulerThreejs.y);
         float c3 = Mathf.Cos(eulerThreejs.z);
@@ -241,7 +268,8 @@ public class StereoCamera : MonoBehaviour {
     /// <returns>
     /// Quaternion representation of rotation transform.
     /// </returns>
-    Quaternion ExtractRotationFromMatrix(ref Matrix4x4 matrix) {
+    Quaternion ExtractRotationFromMatrix(ref Matrix4x4 matrix)
+    {
         Vector3 forward;
         forward.x = matrix.m02;
         forward.y = matrix.m12;
