@@ -12,6 +12,8 @@ public class StereoCamera : MonoBehaviour {
     Vector3 webVREuler = new Vector3();
     Vector3 webVRPosition = new Vector3();
 
+    Vector3 myStartPosition;
+
     // Use this for initialization
     void Start()
     {
@@ -20,6 +22,7 @@ public class StereoCamera : MonoBehaviour {
         cameraR = GameObject.Find("CameraR").GetComponent<Camera>();
 
         myTransform = this.transform;
+        myStartPosition = myTransform.localPosition;
         cameraLTransform = cameraL.transform;
         cameraRTransform = cameraR.transform;
 
@@ -47,7 +50,7 @@ public class StereoCamera : MonoBehaviour {
         myTransform.rotation = Quaternion.Euler(unityEuler);
         var pos = webVRPosition;
         pos.z *= -1;
-        myTransform.position = pos;
+        myTransform.localPosition = myStartPosition + pos;
         StartCoroutine(WaitEndOfFrame());
     }
 
@@ -134,32 +137,32 @@ public class StereoCamera : MonoBehaviour {
 
     void euler_x(float val)
     {
-      webVREuler.x = val;
+        webVREuler.x = val;
     }
 
     void euler_y(float val)
     {
-      webVREuler.y = val;
+        webVREuler.y = val;
     }
 
     void euler_z(float val)
     {
-      webVREuler.z = val;
+        webVREuler.z = val;
     }
 
     void position_x(float val)
     {
-      webVRPosition.x = val;
+        webVRPosition.x = val;
     }
 
     void position_y(float val)
     {
-      webVRPosition.y = val;
+        webVRPosition.y = val;
     }
 
     void position_z(float val)
     {
-      webVRPosition.z = val;
+        webVRPosition.z = val;
     }
 
     void changeMode(string mode)
