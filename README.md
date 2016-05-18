@@ -1,4 +1,4 @@
-# Unity-WebVR-Sample-Assets
+# Unity-WebVR-Assets
 
 WebVR template and assets for creating WebVR-enabled Unity projects.
 
