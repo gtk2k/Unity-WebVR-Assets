@@ -40,24 +40,11 @@ Once your project finishes building, open the generated `index.html` in a [WebVR
 
 ## Local Development Notes
 
-```bash
-cd MyUnityProject
-mkdir -p Assets
-cd Assets
-git clone git@github.com:gtk2k/Unity-WebVR-Test-Assets.git
-ln -s Unity-WebVR-Test-Assets/WebGLTemplates WebGLTemplates
-ln -s Unity-WebVR-Test-Assets/WebVRAssets WebVRAssets
-```
-
-`Project > Assets > WebVRAssets > WebVRCameraSet.prefab`
-
-Drag to `Hierarchy > Main Camera`
-
+To copy the files over to your project:
 
 ```bash
-UNITY_WEBVR_PROJECT=$HOME'/apple/' sync.sh
+UNITY_WEBVR_PROJECT=$HOME'/my-project/' sync.sh
 ```
-
 
 ----
 
