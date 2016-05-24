@@ -38,6 +38,13 @@ Once your project finishes building, open the generated `index.html` in a [WebVR
 * [Instructions to set up Firefox Nightly with WebVR](http://mozvr.com/#start)
 
 
+## Local Development Notes
+
+To copy the files over to your project:
+
+```bash
+UNITY_WEBVR_PROJECT=$HOME'/my-project/' sync.sh
+```
 
 ----
 
