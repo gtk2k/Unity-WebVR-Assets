@@ -238,6 +238,9 @@
   }
 
   function getPose () {
+    if (!vrDisplay) {
+      return;
+    }
     if (isDeprecatedAPI) {
       return vrSensor.getState();
     } else {
