@@ -46,6 +46,8 @@ To copy the files over to your project:
 UNITY_WEBVR_PROJECT=$HOME'/my-project/' sync.sh
 ```
 
+## Licence
+[MIT](https://github.com/gtk2k/Unity-WebVR-Assets/blob/master/LICENCE)
 ----
 
 
@@ -66,7 +68,8 @@ WebGLTemplatesフォルダーを、
 次にWebVRAssetsフォルダー内のPrefabフォルダーとScriptsフォルダーをAssetsフォルダにコピーします。
 PrefabsフォルダーにはWebVRCameraSetというPrefabがありますので、このカメラを適当に配置し、WebVRCameraSetにScriptsフォルダー内にあるStereoCamera.csをアタッチします。
 
-あとは、WebGLでWebVRテンプレートを使ってビルドを行い、出力されたindex.htmlにアクセスすればできます。
+あとは、WebGLでWebVRテンプレートを使ってビルドを行い、出力されたindex.htmlにアクセスすればできます。  
 
 
-ライセンスはフリーです。自由に使ってください。
+## ライセンス
+[MIT](https://github.com/gtk2k/Unity-WebVR-Assets/blob/master/LICENCE)
