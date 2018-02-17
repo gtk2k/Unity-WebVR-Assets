@@ -1,7 +1,7 @@
+# I do not maintain this asset. I recommend to [Unity WebVR Assets](https://github.com/mozilla/unity-webvr-export).
 # Unity-WebVR-Assets
 
 WebVR template and assets for creating WebVR-enabled Unity projects.
-
 
 ## How to Use
 
@@ -54,6 +54,7 @@ UNITY_WEBVR_PROJECT=$HOME'/my-project/' sync.sh
 
 ## Japanese Instructions
 
+# このアセットはメンテナンスをしていません。代わりにMozillaが作成した[Unity WebVR Assets](https://github.com/mozilla/unity-webvr-export)の使用をお勧めします。
 UnityでWebVRに対応したWebGLビルドを行うテスト用のテンプレートおよびアセット
 
 ###使い方
